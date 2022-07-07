@@ -1,2 +1,1 @@
-# sergey144010.github.io
-[link to test.md](./test.md)
+[Небольшой рефакторинг и разбор вариантов логирования на рабочем примере](./src/CustomerAttributeFlowFreshValue.md)
