@@ -94,7 +94,7 @@ interface FreshValueInterface
 }
 ```
 
-и что получилось? Композицию заменили на агрегацию, вшитый логгер убрали, теперь можем передавать всё что работает с Psr\Log\LoggerInterface, это хорошо.
+и что получилось? Композицию заменили на агрегацию, вшитый логер убрали, теперь можем передавать всё что работает с Psr\Log\LoggerInterface, это хорошо.
 Но к Single Responsibility principle не приблизились и еще и интерфейс пришлось править, это не очень хорошо.
 
 А если прокидывать логер не через метод process(), а через другой какой-то метод например setLogger(Psr\Log\LoggerInterface $logger),
@@ -442,7 +442,7 @@ class CustomerAttributeFlowFreshValue implements FreshValueInterface
 ```
 
 Конечно я не рассматриваю здесь логику написания событийной модели, а беру просто стандартную логику laravel events.
-Мета подписчик будет выглядеть примерно так, который конечно должен быть подписан на SomeEvent в фреймворке,через ваш EventServiceProvider.
+Мета подписчик будет выглядеть примерно так, который конечно должен быть подписан на SomeEvent в фреймворке, через ваш EventServiceProvider.
 
 ```php
 class SomeEventListener
