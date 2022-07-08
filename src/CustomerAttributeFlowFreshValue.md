@@ -358,12 +358,16 @@ class CustomerAttributeFlowFreshValueDecorator implements FreshValueInterface
         $this->date = $this->getCustomerAttributeFlowDate($customerAttributeFlow);
     }
 
-    protected function getCustomerAttributeFlowDate(CustomerAttributeFlow $customerAttributeFlow): void
-    {        
-        if ($customerAttributeFlow->date == CustomerAttributeFlowFreshValue::DATE_DEFAULT) {
+    protected function getCustomerAttributeFlowDate(CustomerAttributeFlow $customerAttributeFlow): string
+    {   
+        $date = $this->originalService->getCustomerAttributeFlowDate($customerAttributeFlow);
+        
+        if ($date == CustomerAttributeFlowFreshValue::DATE_DEFAULT) {
             $logger = $this->loggerInit();
             $logger->info("Attribute's date equality null");
         }
+        
+        return $data;
     }
     
     /**
