@@ -123,7 +123,8 @@ object(App\Functionality\Conditionable\One)#58 (0) {
         $response = $one->when(
             [],
             function() { echo 'if true' . PHP_EOL; },
-            function() { echo 'else' . PHP_EOL; });
+            function() { echo 'else' . PHP_EOL; }
+        );
         var_dump($response);
 ```
 ```php
@@ -142,7 +143,8 @@ object(App\Functionality\Conditionable\One)#58 (0) {
         $response = $one->when(
             true,
             function() { return 1; },
-            function() { return 2; });
+            function() { return 2; }
+        );
         var_dump($response);
 ```
 ```php
@@ -157,7 +159,8 @@ int(1)
         $response = $one->when(
             false,
             function() { return 1; },
-            function() { return new \stdClass(); });
+            function() { return new \stdClass(); }
+        );
         var_dump($response);
 ```
 ```php
@@ -169,3 +172,26 @@ object(stdClass)#653 (0) {
 Вот такая вот интересная замена для if else получается.
 
 Метод unless() рассматривать не будем, т.к. он абсолютно одинаковый, но работает наоборот - на false отрабатывает первый коллбек.
+
+Но еще важно упомянуть, что колбек принимает текущий объект и переданное значение, которое используется для сравнения, т.е.
+
+```php
+        $one = new One();
+        
+        $condition = true;
+        
+        $response = $one->when(
+            $condition,
+            function($currentOne, $currentCondition) {},
+            function($currentOne, $currentCondition) {}
+        );
+        var_dump($response);
+```
+
+что позволяет делать такие вот штуки
+
+```php
+       ->when($before, function ($q, $currentBefore) {
+           return $q->where('id', '<', $currentBefore);
+       })
+```
