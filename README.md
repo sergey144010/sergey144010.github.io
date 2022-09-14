@@ -5,3 +5,5 @@
 [Laravel под микроскопом. Illuminate\Support\Traits\Macroable](./src/Laravel/Macroable/Macroable.md)
 
 [Laravel под микроскопом. Illuminate\Support\Traits\Conditionable](./src/Laravel/Conditionable/Conditionable.md)
+
+[Laravel под микроскопом. Illuminate\Support\HigherOrderTapProxy](./src/Laravel/HigherOrderTapProxy/HigherOrderTapProxy.md)
