@@ -7,3 +7,5 @@
 [Laravel под микроскопом. Illuminate\Support\Traits\Conditionable](./src/Laravel/Conditionable/Conditionable.md)
 
 [Laravel под микроскопом. Illuminate\Support\HigherOrderTapProxy](./src/Laravel/HigherOrderTapProxy/HigherOrderTapProxy.md)
+
+[Laravel под микроскопом. Illuminate\Support\helpers.php](./src/Laravel/SupportHelpers/SupportHelpers.md)
