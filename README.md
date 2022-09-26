@@ -9,3 +9,5 @@
 [Laravel под микроскопом. Illuminate\Support\HigherOrderTapProxy](./src/Laravel/HigherOrderTapProxy/HigherOrderTapProxy.md)
 
 [Laravel под микроскопом. Illuminate\Support\helpers.php](./src/Laravel/SupportHelpers/SupportHelpers.md)
+
+[Laravel под микроскопом. Illuminate\Support\Stringable](./src/Laravel/Stringable/Stringable.md)
