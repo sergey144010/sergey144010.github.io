@@ -93,4 +93,46 @@ object(App\Functionality\HigherOrderTapProxy\One)#58 (0) {
 }
 ```
 
-Вот такая вот интересная функция
+Если передаём объект и замыкание, то можно использовать эту функцию как некий инициализатор объекта, например немного изменим класс One
+```php
+class One
+{
+    private int $result;
+
+    public function init(int $a, int $b): void
+    {
+        $this->result = $a + $b;
+    }
+
+    public function result(): int
+    {
+        return $this->result;
+    }
+}
+```
+
+а теперь вызовем tap() и проинициализируем объект
+```php
+        $a = 1; $b = 2;
+        $one = tap(
+            new One(),
+            function(One $object) use ($a, $b) {
+                $object->init($a, $b);
+            }
+        );
+
+        var_dump($one);
+        var_dump($one->result());
+```
+
+и на выходе получаем проинициализированный объект
+```php
+/** Response */
+object(App\Functionality\HigherOrderTapProxy\One)#58 (1) {
+  ["result":"App\Functionality\HigherOrderTapProxy\One":private]=>
+  int(3)
+}
+int(3)
+```
+
+Вот такая вот интересная функция tap()
