@@ -1,5 +1,14 @@
 # Небольшой рефакторинг и разбор вариантов логирования на рабочем примере
 
+### Что мы будем делать и зачем ?
+Мы будем избавляться от жесткой зависимости, в данном случае от логера, в некотором классе.
+Мы это будем делать для того, чтобы иметь возможность тестировать данный класс,
+иметь возможность подменять/убирать зависимости исходя из определенных условий,
+что автоматически подразумевает работу с логикой класса, разделение её на некоторые слои, избавление от жестких зависимостей, соблюдение
+принципа единой ответственности.
+
+### Поехали
+
 И так мы имеем следующий код
 
 ```php
@@ -275,7 +284,8 @@ class CustomerAttributeFlowFreshValueDecorator extends CustomerAttributeFlowFres
 
 Теперь у нас появилась возможность вызывать или декоратор класса или сам класс в зависимости от ситуации
 и не прокидывая логер вообще никуда. Но тем не менее нужно в коде всё-равно вызвать либо-то либо-то или сделать некий if()
-который будет это решение принимать в зависимости от чего-то.
+который будет это решение принимать в зависимости от чего-то. Либо просто в тестах использовать незадекорированный класс, а
+в какой-то среде, например, при dev окружении использовать задекорированный логером класс.
 
 ```php
 $object = new CustomerAttributeFlowFreshValue();
@@ -467,8 +477,102 @@ class SomeEventListener
 }
 ```
 
+Но это хорошо если у вас есть глобальная функция event() реализованная вашим фреймворком, а что делать если её нет?
+Тут очевидно, что придётся прокинуть некий преднастроенный евент менеджер в ваш класс и слушать уже ваше событие.
+В этом вам могут помочь следующие библиотеки:
+
+- https://github.com/yiisoft/event-dispatcher
+- https://github.com/doctrine/event-manager
+- https://github.com/symfony/event-dispatcher
+
+Словом все библиотеки которые поддерживают [PSR-14](https://www.php-fig.org/psr/psr-14/) стандарт. А найти их можно
+просто на [packagist.org](https://packagist.org/providers/psr/event-dispatcher-implementation)
+
+Внедрение диспетчеризации событий уже постепенно отсылает нас к использованию контейнера внедрения зависимостей.
+
+И ёще один способ убрать прямую инициализацию логера в сервисе это использование контейнера внедрения зависимостей.
+Начнём разбираться по порядку. И для более ясного понимания процесса вернёмся к начальному коду, но просто заменим
+прямой вызов логера, на вызов логера из контейнера внедрения зависимостей:
+```php
+class CustomerAttributeFlowFreshValue implements FreshValueInterface
+{
+    private string $value;
+    private string $date;
+
+    public function process(int $customerAttributeId): void
+    {
+        $customerAttributeFlow = (new CustomerAttributeFlowRepository())->
+        findByCustomerAttributeIdActual($customerAttributeId);
+
+        $this->value = $customerAttributeFlow->value;
+
+        if ($customerAttributeFlow->date === null) {
+            app(LoggerInterface)->info("Attribute's date equality null");
+            $customerAttributeFlow->date = '1970-01-01 00:00:01';
+        }
+
+        $this->date = $customerAttributeFlow->date;
+    }
+
+    public function getValue(): string
+    {
+        return $this->value;
+    }
+
+    public function getDate(): string
+    {
+        return $this->date;
+    }
+}
+```
+Здесь опять стоит упомянуть о том, что мы используем встроенную в фреймворк laravel функцию app().
+Которая из контейнера достаёт нужный нам проинициализированный объект. Если у вас нет контейнера, то можно
+использовать любой который поддерживает [PSR-11](https://www.php-fig.org/psr/psr-11/) стандарт. А найти их также можно
+ на [packagist.org](https://packagist.org/providers/psr/container-implementation)
+Что нам дал такой подход? Такой подход дал нам возможность подменять объект логера через контейнер.
+И теперь если мы захотим протестировать данный класс, то для тестов мы можем подменить логер на NullLogger() в контейнере или
+непосредственно в тесте обратимся к контенеру и подменим логер, но по хорошему для тестового окружения нужно создать свой контейнер
+и описать в нём зависимости которые мы хотим или подменять или использовать.
+А теперь вернёмся к принципу единой ответственности и скомбинируем евенты и контейнер как в предыдущем примере
+```php
+class CustomerAttributeFlowFreshValue implements FreshValueInterface
+{
+    private string $value;
+    private string $date;
+
+    public function process(int $customerAttributeId): void
+    {
+        ...
+        $this->event();
+        ...
+    }
+}
+```
+А в слушателе уже будем доставать из контейнера логер
+```php
+class SomeEventListener
+{
+    protected function handle(): void
+    {
+        $logger = $this->loggerInit();
+        $logger->info("Attribute's date equality null");
+    }
+    
+    /**
+    * Логика создания хитроумного логера перенесена в контейнер
+    */
+    private function loggerInit(): Psr\Log\LoggerInterface
+    {
+        return app(LoggerInterface);
+    }
+}
+```
+
 Мы рассмотрели несколько вариантов извлечения логера из класса.
 Какой из них выбрать нужно решать исходя из ваших текущих условий.
 Надеюсь кому-то было полезно это прочитать.
 
 Enjoy !
+
+PS: неплохо былобы добавить тесты и 
+собрать мини приложение с контейнером и евент диспетчером и тоже всю эту всязку протестировать
