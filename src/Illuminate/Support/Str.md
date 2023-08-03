@@ -155,3 +155,21 @@ $result = Str::excerpt($text, 'для создания особой атмосф
 # возвращает:
 string(138) "...отрывки используются для создания особой атмосферы и эффекта, когда чит..."
 ```
+
+### finish()
+Закрыть строку одним экземпляром заданного значения.
+```php
+$result = Str::finish('hello world ', '!!!');
+
+# возвращает:
+string(15) "hello world !!!"
+```
+
+### wrap()
+Оберните строку заданными строками.
+```php
+$result = Str::wrap('hello world ', 'before', 'after');
+
+# возвращает:
+string(23) "beforehello world after"
+```
