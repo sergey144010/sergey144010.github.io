@@ -173,3 +173,41 @@ $result = Str::wrap('hello world ', 'before', 'after');
 # возвращает:
 string(23) "beforehello world after"
 ```
+
+### is()
+Определяет соответствует ли данная строка заданному шаблону.
+```php
+Str::is('library/*', 'library/url'); // true
+Str::is('lib*/url', 'library/url'); // true
+Str::is('*/url', 'library/url'); // true
+```
+
+### isAscii()
+Определяет является ли данная строка 7-битным ASCII.
+```php
+Str::isAscii('白'); // false
+```
+
+### isJson()
+Определяет является ли заданное значение допустимым JSON.
+```php
+Str::isJson('{"foo": "bar"}'); // true
+```
+
+Как по мне, так это не очень удачное решение, потому,
+что внутри себя данный метод декодирует строку и соответственно далее в коде
+эту строку опять нужно будет декодировать, т.е. как минимум получается двойное декодирование одной и тойже строки.
+
+### isUrl()
+Определяет является ли заданное значение допустимым URL-адресом.
+```php
+Str::isUrl('/api/token'); // false
+Str::isUrl('http://api/token'); // true
+Str::isUrl('resource://api/token'); // true
+```
+
+### isUuid()
+Определяет является ли заданное значение допустимым UUID.
+```php
+Str::isUuid('9b6a23c3-9e66-47ed-a981-dccf495815af'); // true
+```
