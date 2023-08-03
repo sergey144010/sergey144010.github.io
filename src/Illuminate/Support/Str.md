@@ -245,3 +245,21 @@ $result = Str::limit('hello world world world', 10);
 # возвращает:
 string(13) "hello worl..."
 ```
+
+### lower()
+Преобразовать данную строку в нижний регистр.
+```php
+$result = Str::lower('HELLO WORLD');
+
+# возвращает:
+string(11) "hello world"
+```
+
+### words()
+Ограничивает количество слов в строке.
+```php
+$result = Str::words('hello my world again', 3);
+
+# возвращает:
+string(17) "hello my world..."
+```
