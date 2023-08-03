@@ -218,3 +218,30 @@ Str::isUuid('9b6a23c3-9e66-47ed-a981-dccf495815af'); // true
 ```php
 Class "Symfony\Component\Uid\Ulid" not found
 ```
+
+### kebab()
+Преобразование строки в kebab case.
+```php
+$result = Str::kebab('hello world');
+
+# возвращает:
+string(11) "hello-world"
+```
+
+### length()
+Возвращает длину заданной строки.
+```php
+$result = Str::length('hello world');
+
+# возвращает:
+int(11)
+```
+
+### limit()
+Ограничить количество символов в строке.
+```php
+$result = Str::limit('hello world world world', 10);
+
+# возвращает:
+string(13) "hello worl..."
+```
