@@ -211,3 +211,10 @@ Str::isUrl('resource://api/token'); // true
 ```php
 Str::isUuid('9b6a23c3-9e66-47ed-a981-dccf495815af'); // true
 ```
+
+### isUlid()
+Определяет является ли заданное значение допустимым ULID.
+Пока не удалось протестировать
+```php
+Class "Symfony\Component\Uid\Ulid" not found
+```
