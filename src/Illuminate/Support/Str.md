@@ -2,13 +2,13 @@
 Можно найти здесь: [Illuminate\Support\Str](https://github.com/illuminate/support/blob/master/Str.php)
 
 Очень интересный класс помошник для работы со строками. Идёт в связке с классом
-[Illuminate\Support\Stringable](./src/Illuminate/Support/Stringable/Stringable.md)
+[Illuminate\Support\Stringable](../../src/Illuminate/Support/Stringable/Stringable.md)
 Предоставляет много статических методов для работы со строкой, причём даже может иметь некоторые предварительные настройки.
 
 Пройдёмся по каждому методу, которые имеются на момент написания данного текста.
 
 ### of()
-Получает новый объект Stringable из переданной строки, как с ним работать смотри здесь [Illuminate\Support\Stringable](./src/Illuminate/Support/Stringable/Stringable.md)
+Получает новый объект Stringable из переданной строки, как с ним работать смотри здесь [Illuminate\Support\Stringable](../../src/Illuminate/Support/Stringable/Stringable.md)
 ```php
 $stringAbleObject = Str::of('hello world');
 
@@ -77,8 +77,57 @@ string(22) "world 0 hello 1 world "
 ### between()
 Получить часть строки между двумя заданными значениями.
 ```php
-$result = Str::between('world 0 hello 1 my world hello', 'hello', 'world');
+$result = Str::between('world 0 hello 1 my world world hello', 'hello', 'world');
+
+# возвращает:
+string(12) " 1 my world "
+
+```
+
+### betweenFirst()
+Получить наименьшую возможную часть строки между двумя заданными значениями.
+```php
+$result = Str::betweenFirst('world 0 hello 1 my world world hello', 'hello', 'world');
 
 # возвращает:
 string(6) " 1 my "
+```
+
+### camel()
+Преобразует значение в camelCase. Из строки разделённой пробелами.
+```php
+$result = Str::camel('hello world my friends');
+
+# возвращает:
+string(19) "helloWorldMyFriends"
+```
+
+### charAt()
+Получить символ по указанному индексу.
+```php
+$result = Str::charAt('hello world my friends', 4);
+
+# возвращает:
+string(1) "o"
+```
+
+### contains()
+Определяет содержит ли заданная строка заданную подстроку.
+```php
+$result = Str::contains('hello world my friends', 'my');
+
+# возвращает:
+bool(false)
+
+# применяют:
+Str::contains($actualListener, '@')
+```
+
+### containsAll() 
+Определяет содержит ли данная строка все значения массива.
+```php
+$result = Str::containsAll('hello world my friends', ['my', 'world']);
+
+# возвращает:
+bool(true)
 ```
