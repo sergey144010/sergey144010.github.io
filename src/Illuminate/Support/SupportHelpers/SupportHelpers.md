@@ -10,7 +10,8 @@
 По факту просто вызов колбека с каким то параметром. И значение может в данном случае быть абсолютно любым типом.
 Но если колбек отсутствует, то значение оборачивается в прокси объект HigherOrderTapProxy, и значение уже может быть только
 объектом, а дальше из этого прокси можно вызвать методы того объекта который передали как значение.
-Данный прокси объект мы рассматривали подробно в разделе [Illuminate\Support\HigherOrderTapProxy](./src/Laravel/HigherOrderTapProxy/HigherOrderTapProxy.md)
+Данный прокси объект мы рассматривали подробно в разделе
+[Illuminate\Support\HigherOrderTapProxy](./src/Illuminate/Support/HigherOrderTapProxy/HigherOrderTapProxy.md)
 
 ```php
 if (! function_exists('tap')) {
