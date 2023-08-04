@@ -263,3 +263,40 @@ $result = Str::words('hello my world again', 3);
 # возвращает:
 string(17) "hello my world..."
 ```
+
+### markdown()
+Преобразует диалект GitHub Flavored Markdown в HTML.
+требует установки league/commonmark
+```php
+$result = Str::markdown("~~Зачёркнутый текст~~");
+
+# возвращает:
+string(52) "<p><del>Зачёркнутый текст</del></p>"
+```
+
+### inlineMarkdown()
+Преобразует Markdown в HTML.
+```php
+$result = Str::inlineMarkdown("~~Зачёркнутый текст~~");
+
+# возвращает:
+string(45) "<del>Зачёркнутый текст</del>"
+```
+
+### mask()
+Маскирует часть строки повторяющимся символом.
+```php
+$result = Str::mask('hello world', '?', 2);
+
+# возвращает:
+string(11) "he?????????"
+```
+
+### match()
+Получить строку, соответствующую заданному шаблону.
+```php
+$result = Str::match('/[a-z]+\s\w+/i', 'hello world');
+
+# возвращает:
+string(11) "hello world"
+```
