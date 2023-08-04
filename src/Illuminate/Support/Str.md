@@ -1,5 +1,6 @@
 # Illuminate\Support\Str
-Можно найти здесь: [Illuminate\Support\Str](https://github.com/illuminate/support/blob/master/Str.php)
+[Illuminate\Support\Str](https://github.com/illuminate/support/blob/master/Str.php)
+[Helpers Documentation](https://laravel.com/docs/10.x/helpers)
 
 Очень интересный класс помошник для работы со строками. Идёт в связке с классом
 [Illuminate\Support\Stringable](../../../src/Illuminate/Support/Stringable/Stringable.md)
@@ -299,4 +300,41 @@ $result = Str::match('/[a-z]+\s\w+/i', 'hello world');
 
 # возвращает:
 string(11) "hello world"
+```
+
+### isMatch()
+Определить, соответствует ли данная строка заданному шаблону.
+```php
+$result = Str::isMatch('/[a-z]+\s\w+/i', 'hello world');
+
+# возвращает:
+bool(true)
+```
+
+### matchAll()
+Получить коллекцию из строк соответствующую заданному шаблону.
+```php
+$result = Str::matchAll('/hello/i', 'hello world hello1');
+
+# возвращает:
+object(Illuminate\Support\Collection)#3 (2) {
+  ["items":protected]=>
+  array(2) {
+    [0]=>
+    string(5) "hello"
+    [1]=>
+    string(5) "hello"
+  }
+  ["escapeWhenCastingToString":protected]=>
+  bool(false)
+}
+```
+
+### padBoth()
+Метод оборачивает строку дополняя обе стороны строки другой строкой до тех пор, пока окончательная строка не достигнет желаемой длины.
+```php
+$result = Str::padBoth('hello', 10, '_');
+
+# возвращает:
+string(10) "__hello___"
 ```
