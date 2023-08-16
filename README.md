@@ -17,3 +17,7 @@
 [Illuminate\Support\Stringable](./src/Illuminate/Support/Stringable/Stringable.md)
 
 [Illuminate\Support\Str](./src/Illuminate/Support/Str.md)
+
+# Typescript
+
+[Отображения](./src/Typescript/MappedTypes.md)
